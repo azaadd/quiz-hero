@@ -49,29 +49,37 @@ const loadQuiz = async () => {
   const data = await res.json();
   quizData = data;
   displayQuiz(data);
+  // console.log(data);
 };
 
 // Displaying quiz on quiz page
 const displayQuiz = (data) => {
+  const quizContainer = document.getElementById('quizContainer');
   if (!data) {
     quizContainer.innerHTML = "";
     return;
   }
-
+  // console.log(quizContainer);
   data.forEach((quiz, i) => {
-    quizContainer.innerHTML = `
-      <div class="m-3 py-3 px-4 shadow-sm rounded">
-        <div class="flex items-center">
-          <div class="h-8 w-8 bg-green-300 rounded-full flex justify-center items-center text-green-800 mr-3">
-          ${i + 1}
+
+    // console.log(quiz);
+    const quizDiv = document.createElement('div');
+      quizDiv.innerHTML = `
+        <div class="m-3 py-3 px-4 shadow-sm rounded">
+          <div class="flex items-center">
+            <div class="h-8 w-8 bg-green-300 rounded-full flex justify-center items-center text-green-800 mr-3">
+            ${i + 1}
+            </div>
+            <p class="text-gray-800 text-sm">${quiz.question}</p>
+          
           </div>
-          <p class="text-gray-800 text-sm">${quiz.question}</p>
+          <div class="grid grid-cols-2 gap-4 mt-5">
+            ${displayQuizOptions(quiz.options, i)}
+          </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 mt-5">
-          ${displayQuizOptions(quiz.options, i)}
-        </div>
-      </div>
-      `;
+        `;
+        quizContainer.appendChild(quizDiv);
+      // console.log(quiz);
   });
 };
 
